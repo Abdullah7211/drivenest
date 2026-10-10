@@ -1,7 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
 
-const BACKEND = "http://localhost:3000";
+const BACKEND =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 const FOLDER_MIME = "application/vnd.google-apps.folder";
 
 function formatDate(date) {
@@ -42,7 +43,7 @@ function App() {
 
   const checkAccounts = useCallback(async () => {
     try {
-      const response = await fetch("/api/me", {
+      const response = await fetch(`${BACKEND}/api/me`, {
         credentials: "include",
       });
 
@@ -98,7 +99,7 @@ function App() {
             folderId,
           });
 
-          const response = await fetch(`/api/files?${params}`, {
+          const response = await fetch(`${BACKEND}/api/files?${params}`, {
             credentials: "include",
           });
 
@@ -196,7 +197,7 @@ function App() {
 
     try {
       const response = await fetch(
-        `/api/accounts/${encodeURIComponent(email)}`,
+        `${BACKEND}/api/accounts/${encodeURIComponent(email)}`,
         {
           method: "DELETE",
           credentials: "include",
