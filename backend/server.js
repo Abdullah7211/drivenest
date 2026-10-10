@@ -7,7 +7,7 @@ const crypto = require("crypto");
 const { google } = require("googleapis");
 
 const app = express();
-const PORT = Number(process.env.PORT || 3000);
+const PORT = Number(process.env.PORT) || 3000;
 const FRONTEND_URL =
   process.env.FRONTEND_URL || "http://localhost:5173";
 
@@ -272,6 +272,6 @@ app.post("/api/logout", (req, res) => {
   });
 });
 
-app.listen(PORT, "localhost", () => {
-  console.log(`My Drive Hub backend: http://localhost:${PORT}`);
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`DriveNest backend running on port ${PORT}`);
 });
