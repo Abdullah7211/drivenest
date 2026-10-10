@@ -1,12 +1,21 @@
 
 require("dotenv").config();
 
+const cors = require("cors");
 const express = require("express");
 const session = require("express-session");
 const crypto = require("crypto");
 const { google } = require("googleapis");
 
 const app = express();
+app.set("trust proxy", 1);
+
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    credentials: true,
+  })
+);
 const PORT = Number(process.env.PORT) || 3000;
 const FRONTEND_URL =
   process.env.FRONTEND_URL || "http://localhost:5173";
@@ -32,8 +41,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
-      sameSite: "lax",
-      secure: false, // Local HTTP development only
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      secure: process.env.NODE_ENV === "production",
       maxAge: 60 * 60 * 1000,
     },
   })
