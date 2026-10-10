@@ -6,9 +6,20 @@ const express = require("express");
 const session = require("express-session");
 const crypto = require("crypto");
 const { google } = require("googleapis");
+const { createClient } = require("redis");
+const { RedisStore } = require("connect-redis");
 
 const app = express();
 app.set("trust proxy", 1);
+const redisClient = process.env.REDIS_URL
+  ? createClient({ url: process.env.REDIS_URL })
+  : null;
+
+if (redisClient) {
+  redisClient.on("error", (err) => {
+    console.error("Redis error:", err.message);
+  });
+}
 
 app.use(
   cors({
@@ -35,6 +46,13 @@ for (const key of REQUIRED_ENV) {
 
 app.use(
   session({
+    store: redisClient
+      ? new RedisStore({
+          client: redisClient,
+          prefix: "drivenest:sess:",
+        })
+      : undefined,
+
     name: "mydrivehub.sid",
     secret: process.env.SESSION_SECRET,
     resave: false,
@@ -281,6 +299,20 @@ app.post("/api/logout", (req, res) => {
   });
 });
 
-app.listen(PORT, "0.0.0.0", () => {
-  console.log(`DriveNest backend running on port ${PORT}`);
+async function startServer() {
+  if (redisClient) {
+    await redisClient.connect();
+    console.log("Redis session store connected.");
+  } else {
+    console.log("REDIS_URL not set; using local memory sessions.");
+  }
+
+  app.listen(PORT, "0.0.0.0", () => {
+    console.log(`DriveNest backend running on port ${PORT}`);
+  });
+}
+
+startServer().catch((err) => {
+  console.error("Failed to start DriveNest backend:", err.message);
+  process.exit(1);
 });
