@@ -244,3 +244,26 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .heading-row p {
   text-align: left;
 }
+/* Public landing page, footer and legal pages */
+.landing { display: grid; gap: 28px; }
+.landing .welcome { margin: 40px auto 0; width: min(640px, 100%); }
+.landing .welcome small a, .landing-note a, .legal a, .site-footer a { color: var(--blue); }
+.feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; }
+.feature { padding: 20px; border: 1px solid var(--border); border-radius: 16px; background: rgb(30 30 46 / 88%); text-align: left; }
+.feature h3 { margin: 0 0 8px; color: #f5e0dc; font-family: 'Space Grotesk', sans-serif; font-size: 16px; }
+.feature p { margin: 0; color: var(--subtext); font-size: 13px; line-height: 1.65; }
+.landing-note { margin: 0; color: var(--overlay); font-size: 12px; line-height: 1.7; text-align: center; }
+
+.brand-link { color: inherit; text-decoration: none; }
+
+.site-footer { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; width: min(1180px, 100%); margin: 0 auto; padding: 24px clamp(16px, 3vw, 34px) 0; border-top: 1px solid var(--border); color: var(--overlay); font-size: 12px; }
+.site-footer nav { display: flex; flex-wrap: wrap; gap: 18px; }
+
+.legal { max-width: 760px; text-align: left; }
+.legal h2 { margin: 0 0 6px; color: #f5e0dc; font-family: 'Space Grotesk', sans-serif; font-size: clamp(25px, 3vw, 34px); }
+.legal h3 { margin: 30px 0 8px; color: #f5e0dc; font-family: 'Space Grotesk', sans-serif; font-size: 17px; }
+.legal p, .legal li { color: var(--subtext); font-size: 14px; line-height: 1.75; }
+.legal ul { padding-left: 22px; }
+.legal li { margin-bottom: 8px; }
+.legal strong { color: var(--text); }
+.legal-date { margin-bottom: 8px; color: var(--overlay); }

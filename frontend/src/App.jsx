@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import "./App.css";
+import SiteFooter from "./SiteFooter.jsx";
+import { APP_NAME } from "./siteConfig.js";
 
 const BACKEND =
   import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
@@ -190,7 +192,7 @@ function App() {
 
   async function removeAccount(email) {
     const confirmed = window.confirm(
-      `Disconnect ${email} from My Drive Hub?`
+      `Disconnect ${email} from ${APP_NAME}?`
     );
 
     if (!confirmed) return;
@@ -235,7 +237,7 @@ function App() {
   );
 
   if (loading) {
-    return <main className="center">Loading My Drive Hub…</main>;
+    return <main className="center">Loading DriveNest…</main>;
   }
 
   return (
@@ -244,7 +246,7 @@ function App() {
         <div className="brand">
           <div className="brand-icon">D</div>
           <div>
-            <h1>My Drive Hub</h1>
+            <h1>{APP_NAME}</h1>
             <p>All your Google Drives, one place</p>
           </div>
         </div>
@@ -275,22 +277,64 @@ function App() {
         {error && <div className="error">{error}</div>}
 
         {!connected ? (
-          <div className="welcome">
-            <div className="welcome-icon">☁</div>
-            <h2>All your Drives, one place</h2>
-            <p>
-              Connect your Google accounts to browse their files
-              together.
-            </p>
+          <div className="landing">
+            <div className="welcome">
+              <div className="welcome-icon">☁</div>
+              <h2>Your Google Drives, organized in one place.</h2>
+              <p>
+                {APP_NAME} is a web application that lets you connect one or
+                more Google accounts and browse their Google Drive files and
+                folders together in a single, searchable list.
+              </p>
 
-            <button
-              className="primary-button"
-              onClick={() => {
-                window.location.href = `${BACKEND}/auth/google`;
-              }}
-            >
-              Continue with Google
-            </button>
+              <button
+                className="primary-button"
+                onClick={() => {
+                  window.location.href = `${BACKEND}/auth/google`;
+                }}
+              >
+                Sign in with Google
+              </button>
+
+              <small>
+                {APP_NAME} requests read-only access to Google Drive file
+                metadata (names, types, dates, sizes, and links). It cannot
+                read file contents or change, upload, or delete anything. See
+                our <a href="/privacy">Privacy Policy</a>.
+              </small>
+            </div>
+
+            <div className="feature-grid">
+              <div className="feature">
+                <h3>Connect multiple accounts</h3>
+                <p>Add as many Google accounts as you need and see them side by side.</p>
+              </div>
+              <div className="feature">
+                <h3>Browse files and folders</h3>
+                <p>View names, last-modified dates, and sizes, and open folders to go deeper.</p>
+              </div>
+              <div className="feature">
+                <h3>Search and switch accounts</h3>
+                <p>Search listed files by name and filter by a single account or all of them.</p>
+              </div>
+              <div className="feature">
+                <h3>Disconnect any time</h3>
+                <p>Remove an account from {APP_NAME} with one click, or revoke access in your Google Account.</p>
+              </div>
+            </div>
+
+            <p className="landing-note">
+              {APP_NAME}'s use of information received from Google APIs adheres
+              to the{" "}
+              <a
+                href="https://developers.google.com/terms/api-services-user-data-policy"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Google API Services User Data Policy
+              </a>
+              , including the Limited Use requirements.
+            </p>
           </div>
         ) : (
           <>
@@ -447,6 +491,8 @@ function App() {
           </>
         )}
       </section>
+
+      <SiteFooter />
     </main>
   );
 }
