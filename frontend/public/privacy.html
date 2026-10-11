@@ -38,24 +38,26 @@
 <h1>Privacy Policy</h1>
 <p class="date">DriveNest (https://drivenest.app) · Effective date: October 11, 2026</p>
 
-<div class="box"><strong>Summary.</strong> DriveNest lets you connect Google accounts and browse the names, types, dates, sizes and links of your Google Drive files in one list. It has read-only access to file <em>metadata</em> only. It cannot read the contents of your files or change, share or delete anything. We do not sell your data, use it for advertising, or store your file listings. You can disconnect an account at any time.</div>
+<div class="box"><strong>Summary.</strong> You create a DriveNest account by signing up with Google or GitHub. You can then connect Google Drive accounts, and DriveNest shows the names, types, dates, sizes and links of your Drive files in one list. Drive access is read-only and limited to file <em>metadata</em>: DriveNest cannot read the contents of your files or change, share or delete anything. We store your DriveNest account details (email and name) and, for each Drive you connect, an encrypted access key (refresh token) so it stays connected. We do not store your file listings, sell your data, or use it for advertising. You can disconnect any Drive or delete your account, and everything we store, at any time.</div>
 
 <h2>1. Who we are</h2>
 <p>DriveNest is a web application operated by its developer (“DriveNest”, “we”, “us”). This policy explains what information the service accesses, why, how it is stored and protected, who it is shared with, and the choices you have. Contact: <a href="mailto:support@drivenest.app">support@drivenest.app</a>.</p>
 
 <h2>2. Information we access and collect</h2>
-<h3>2.1 Google user data (accessed through Google APIs, with your permission)</h3>
+<h3>2.1 Account and Google user data (accessed with your permission)</h3>
 <table>
-<tr><th>Data</th><th>Google scope</th><th>Why we need it</th></tr>
-<tr><td>Your Google account email address and, if provided by Google, your display name</td><td><code>openid</code>, <code>email</code></td><td>To identify each Google account you connect and show which account every file belongs to.</td></tr>
+<tr><th>Data</th><th>Source and scope</th><th>Why we need it</th></tr>
+<tr><td>Email address, name and Google user ID when you sign up or log in with Google</td><td>Google sign-in: <code>openid</code>, <code>email</code>, <code>profile</code></td><td>To create and recognize your DriveNest account.</td></tr>
+<tr><td>Verified email address, name or username, and GitHub user ID when you sign up or log in with GitHub</td><td>GitHub sign-in: <code>read:user</code>, <code>user:email</code>. This is GitHub data, not Google data.</td><td>To create and recognize your DriveNest account.</td></tr>
+<tr><td>Email address and name of each Google account you connect as a Drive</td><td><code>openid</code>, <code>email</code></td><td>To show which account each file belongs to and let you manage connected accounts.</td></tr>
 <tr><td>Google Drive file and folder <strong>metadata</strong>: ID, name, type (MIME type), last-modified time, size, web link, icon link, thumbnail link and parent folder</td><td><code>https://www.googleapis.com/auth/drive.metadata.readonly</code></td><td>To list files and folders, let you open folders, search the list by name, and open a file in Google Drive using its link.</td></tr>
-<tr><td>OAuth access and refresh tokens issued by Google for your account</td><td>Issued for the scopes above</td><td>To call the Google Drive API for you while your session is active. Tokens are never shown to your browser.</td></tr>
-</table>
+<tr><td>A Google OAuth refresh token for each connected Drive account</td><td>Issued by Google for the scopes above</td><td>To keep the Drive connected between visits so you do not have to reconnect each time. Stored encrypted.</td></tr>
+</table></table>
 <p>The Drive metadata scope is read-only. It does <strong>not</strong> allow DriveNest to read the content of your files, or to create, edit, move, share, upload or delete anything in your Google Drive.</p>
 
 <h3>2.2 Technical information</h3>
 <ul>
-<li><strong>Session cookie</strong> (<code>mydrivehub.sid</code>): a random identifier, marked HTTP-only and secure, that keeps you signed in. It does not contain your email or tokens.</li>
+<li><strong>Session cookie</strong> (<code>mydrivehub.sid</code>): a random identifier, marked HTTP-only and secure, that keeps you logged in for up to 7 days of inactivity. It does not contain your email or tokens.</li>
 <li><strong>Operational logs</strong>: our hosting providers and servers may process technical data such as IP address, request time and error messages to run, secure and troubleshoot the service. We do not write Google tokens or file listings to our logs.</li>
 </ul>
 
@@ -63,7 +65,7 @@
 <p>We do not access the contents of your files, your contacts, calendar, email, location or payment information. We do not use advertising or tracking cookies, and we do not run third-party analytics on the service.</p>
 
 <h2>3. How we use information</h2>
-<p>We use Google user data only to provide and improve the user-facing features described above: connecting accounts, listing files and folders, searching the displayed list, switching between accounts, opening files in Google Drive, and keeping the service secure. We do not use Google user data for advertising, profiling, credit or lending decisions, or to build or train generalized AI or machine-learning models.</p>
+<p>We use account information to create and secure your DriveNest account. We use Google user data only to provide and improve the user-facing features described above: connecting accounts, listing files and folders, searching the displayed list, switching between accounts, opening files in Google Drive, and keeping the service secure. We do not use Google user data for advertising, profiling, credit or lending decisions, or to build or train generalized AI or machine-learning models.</p>
 
 <h2>4. Google API Services User Data Policy (Limited Use)</h2>
 <p>DriveNest&rsquo;s use and transfer to any other app of information received from Google APIs adheres to the <a href="https://developers.google.com/terms/api-services-user-data-policy" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements. In particular:</p>
@@ -76,39 +78,43 @@
 
 <h2>5. How data is stored and protected</h2>
 <ul>
-<li>Connected account details (email, name) and Google OAuth tokens are held in a <strong>temporary server-side session</strong> stored in a Redis database used for sessions. They are not stored in a permanent user database.</li>
-<li>Sessions expire automatically <strong>one hour</strong> after they start. When a session expires, the stored account details and tokens are removed and you must sign in again.</li>
+<li>Your DriveNest account (email, name, and the Google or GitHub identifier you signed up with) and the connected Drive accounts you add are stored in a <strong>PostgreSQL database</strong>.</li>
+<li>Google refresh tokens are stored <strong>encrypted</strong> (AES-256-GCM) with a key kept outside the database. Tokens are never sent to your browser and are not written to logs. Short-lived access tokens are requested from Google when needed and are not stored.</li>
+<li>Login sessions are stored server-side in Redis and expire after 7 days of inactivity. Your browser only holds an opaque, HTTP-only, secure session cookie.</li>
 <li>Drive file metadata is requested from Google each time you browse and is sent directly to your browser. <strong>We do not store or keep copies of your file listings.</strong></li>
-<li>All traffic between your browser, DriveNest and Google is encrypted using HTTPS. Access to our servers and infrastructure accounts is restricted to the developer.</li>
+<li>All traffic between your browser, DriveNest, Google and GitHub is encrypted using HTTPS. Access to our servers, database and infrastructure accounts is restricted to the developer.</li>
 </ul>
 
 <h2>6. Sharing and disclosure</h2>
 <p>We do not sell, rent or trade your personal information or Google user data. We share information only with service providers that help us operate DriveNest, and only as needed to provide the service:</p>
 <ul>
 <li><strong>Google</strong> – sign-in and the Google Drive API.</li>
+<li><strong>GitHub</strong> – optional sign-in, if you choose to sign up or log in with GitHub.</li>
 <li><strong>Cloudflare</strong> – hosting and delivery of the website.</li>
-<li><strong>Render</strong> – hosting of the backend (API) server.</li>
-<li><strong>Our managed Redis provider</strong> – temporary session storage.</li>
+<li><strong>Render</strong> – hosting of the backend server and the PostgreSQL database.</li>
+<li><strong>Our managed Redis provider</strong> – session storage.</li>
 </ul>
 <p>We may also disclose information if required by law or valid legal process, or to protect the rights, safety and security of users and the service.</p>
 
 <h2>7. Retention and deletion</h2>
 <ul>
-<li>Account details and tokens are kept only for the life of your session (up to one hour) and are then deleted automatically.</li>
-<li>Selecting <strong>Disconnect</strong> next to an account in DriveNest removes that account and its tokens from your session immediately.</li>
+<li>We keep your account details and connected-account tokens for as long as your DriveNest account exists, so your Drives stay connected.</li>
+<li>Selecting <strong>Disconnect</strong> next to a Drive account removes it and its stored token from our database and revokes the token at Google.</li>
+<li>Selecting <strong>Delete my account</strong> in the account menu permanently deletes your DriveNest account, all connected Drive accounts and stored tokens, and revokes those tokens at Google. Your Google Drive files are never affected.</li>
+<li>Login sessions are deleted automatically after 7 days of inactivity or when you log out.</li>
 <li>We keep no copy of your Drive file metadata after you leave a page.</li>
 <li>Routine operational logs kept by hosting providers are retained only for the period set by those providers.</li>
 </ul>
 
 <h2>8. Your choices and rights</h2>
 <ul>
-<li><strong>Disconnect</strong> any account inside DriveNest at any time.</li>
+<li><strong>Disconnect</strong> any Drive account, or <strong>delete your DriveNest account</strong>, inside DriveNest at any time.</li>
 <li><strong>Revoke access</strong> in your Google Account at <a href="https://myaccount.google.com/permissions" rel="noopener noreferrer">myaccount.google.com/permissions</a>. Choose DriveNest, then “Delete all connections”.</li>
 <li><strong>Request access, correction or deletion</strong> of any personal data we hold about you by emailing <a href="mailto:support@drivenest.app">support@drivenest.app</a>. Depending on where you live (for example under the GDPR or similar laws), you may have additional rights, and you may contact us to exercise them. We will respond within a reasonable time.</li>
 </ul>
 
 <h2>9. Cookies</h2>
-<p>DriveNest uses a single strictly necessary session cookie to keep you signed in. We do not use advertising, analytics or cross-site tracking cookies.</p>
+<p>DriveNest uses a single strictly necessary session cookie to keep you logged in. We do not use advertising, analytics or cross-site tracking cookies.</p>
 
 <h2>10. International processing</h2>
 <p>Our service providers may process data on servers located in countries other than your own. We rely on providers that apply appropriate safeguards for the data they process.</p>

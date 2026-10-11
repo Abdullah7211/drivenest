@@ -16,9 +16,17 @@ export default function Support() {
 
         <h2>Disconnect an account</h2>
         <p>
-          Sign in to {APP_NAME}, find the account under “Connected accounts”,
-          and click <strong>Disconnect</strong>. This removes the account and
-          its access details from your session immediately.
+          Log in to {APP_NAME}, find the account under “Connected accounts”,
+          and click <strong>Disconnect</strong>. This removes the account,
+          deletes its stored access key, and revokes it at Google.
+        </p>
+
+        <h2>Delete your DriveNest account</h2>
+        <p>
+          Log in, open the account menu in the top right, and choose{" "}
+          <strong>Delete my account</strong>. This disconnects and revokes every
+          connected Google account and permanently deletes the data we store
+          about you. You can also email us to request deletion.
         </p>
 
         <h2>Revoke access from Google</h2>
@@ -32,7 +40,7 @@ export default function Support() {
 
         <h2>Troubleshooting</h2>
         <ul>
-          <li><strong>I was signed out:</strong> sessions last one hour. Sign in with Google again.</li>
+          <li><strong>I was logged out:</strong> logins expire after 7 days without activity. Log in again; your connected Drives stay linked.</li>
           <li><strong>Sign-in is blocked:</strong> some work or school organizations restrict third-party apps. Ask your administrator to allow {APP_NAME}.</li>
           <li><strong>Files are missing:</strong> {APP_NAME} lists the files in the folder you are viewing, up to 100 items per account. Open the folder or use another account filter.</li>
           <li><strong>An account shows an error:</strong> disconnect it and add it again.</li>

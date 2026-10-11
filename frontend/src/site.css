@@ -158,3 +158,21 @@ body.public-body #root { width: 100%; max-width: none; border-inline: 0; text-al
   .btn-small { width: auto; }
 }
 @media (prefers-reduced-motion: reduce) { .site * { transition: none !important; } }
+
+/* Auth pages and header actions */
+.site-actions { display: flex; gap: 8px; }
+.site-header-inner .site-actions { margin-left: 0; }
+.btn-block { width: 100%; }
+.site .btn-github { background: #1b1f24; color: #fff; }
+.site .btn-github:hover { background: #000; color: #fff; }
+.auth-wrap { display: grid; place-items: center; padding: clamp(32px, 6vw, 72px) 18px; background: linear-gradient(180deg, var(--tint), #fff); min-height: 70vh; }
+.auth-card { display: grid; gap: 12px; width: min(420px, 100%); padding: 32px 28px; border: 1px solid var(--line); border-radius: 18px; background: #fff; box-shadow: 0 24px 50px -24px rgb(11 42 91 / 25%); text-align: center; }
+.auth-card img { margin: 0 auto 4px; border-radius: 14px; }
+.site .auth-card h1 { font-size: 26px; letter-spacing: -.03em; line-height: 1.15; }
+.auth-sub { color: var(--muted); font-size: 15px; margin-bottom: 8px; }
+.auth-note { margin-top: 6px; color: var(--muted); font-size: 12.5px; line-height: 1.6; }
+.auth-switch { font-size: 14px; }
+.auth-legal { color: #7b8aa3; font-size: 12px; }
+.auth-card .site-error { text-align: left; margin: 0; }
+@media (max-width: 900px) { .site-header-inner { gap: 12px; } }
+@media (max-width: 560px) { .site-actions .btn-ghost { display: none; } }

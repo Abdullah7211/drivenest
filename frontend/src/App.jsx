@@ -32,7 +32,26 @@ function formatSize(size) {
   return `${(bytes / 1024 ** 3).toFixed(2)} GB`;
 }
 
+
+function hasHint() {
+  try {
+    return localStorage.getItem("dn_logged_in") === "1";
+  } catch {
+    return false;
+  }
+}
+
+function setHint(value) {
+  try {
+    if (value) localStorage.setItem("dn_logged_in", "1");
+    else localStorage.removeItem("dn_logged_in");
+  } catch {
+    /* storage unavailable */
+  }
+}
+
 function App() {
+  const [user, setUser] = useState(null);
   const [accounts, setAccounts] = useState([]);
   const [selectedAccount, setSelectedAccount] = useState("all");
   const [files, setFiles] = useState([]);
@@ -58,6 +77,8 @@ function App() {
       const data = await response.json();
       const connectedAccounts = data.accounts || [];
 
+      setUser(data.user || null);
+      setHint(Boolean(data.user));
       setAccounts(connectedAccounts);
 
       setSelectedAccount((current) => {
@@ -192,6 +213,34 @@ function App() {
     setSearch("");
   }
 
+  async function logOut() {
+    try {
+      await fetch(`${BACKEND}/api/logout`, { method: "POST", credentials: "include" });
+    } finally {
+      setHint(false);
+      window.location.href = "/";
+    }
+  }
+
+  async function deleteMyAccount() {
+    const confirmed = window.confirm(
+      `Delete your ${APP_NAME} account? This disconnects all Google accounts and permanently removes your stored data. Your Google Drive files are not affected.`
+    );
+    if (!confirmed) return;
+
+    try {
+      const response = await fetch(`${BACKEND}/api/me`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+      if (!response.ok) throw new Error("Could not delete your account.");
+      setHint(false);
+      window.location.href = "/";
+    } catch (err) {
+      setError(err.message || "Could not delete your account.");
+    }
+  }
+
   async function removeAccount(email) {
     const confirmed = window.confirm(
       `Disconnect ${email} from ${APP_NAME}?`
@@ -238,7 +287,11 @@ function App() {
     file.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (!connected) {
+  if (loading && hasHint()) {
+    return <main className="center">Loading DriveNest…</main>;
+  }
+
+  if (!user) {
     return <Landing error={error} />;
   }
 
@@ -272,13 +325,41 @@ function App() {
           >
             + Add Google Account
           </button>
+
+          <details className="user-menu">
+            <summary>{user.email}</summary>
+            <div className="user-menu-panel">
+              <button type="button" onClick={logOut}>Log out</button>
+              <button type="button" className="danger" onClick={deleteMyAccount}>
+                Delete my account
+              </button>
+            </div>
+          </details>
         </div>
       </header>
 
       <section className="content">
         {error && <div className="error">{error}</div>}
 
-        {(
+        {accounts.length === 0 ? (
+          <div className="welcome">
+            <div className="welcome-icon">☁</div>
+            <h2>Connect your first Google Drive</h2>
+            <p>
+              You are logged in to {APP_NAME}. Add a Google account to browse
+              its files here. {APP_NAME} only gets read-only access to file
+              details.
+            </p>
+            <button
+              className="primary-button"
+              onClick={() => {
+                window.location.href = `${BACKEND}/auth/google`;
+              }}
+            >
+              Connect Google Drive
+            </button>
+          </div>
+        ) : (
           <>
             <div className="heading-row">
               <div>

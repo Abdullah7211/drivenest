@@ -1,4 +1,4 @@
-import PublicLayout, { SignInButton } from "./PublicLayout.jsx";
+import PublicLayout from "./PublicLayout.jsx";
 import { APP_NAME } from "./siteConfig.js";
 
 const FEATURES = [
@@ -11,8 +11,8 @@ const FEATURES = [
 ];
 
 const STEPS = [
-  ["Sign in with Google", "Choose the Google account you want to add and approve read-only access to file details."],
-  ["Add more accounts", "Use “Add Google Account” to connect as many accounts as you like."],
+  ["Create your account", "Sign up with Google or GitHub. This becomes your DriveNest account."],
+  ["Connect your Drives", "Add each Google account you want to see and approve read-only access to file details."],
   ["Browse, search, open", "Switch between all Drives or a single account, search, and open files in Google Drive."],
 ];
 
@@ -30,9 +30,10 @@ const CANT = [
 const FAQ = [
   ["What does DriveNest do?", `${APP_NAME} is a web app that lets you connect several Google accounts and browse their Google Drive files and folders together in one searchable list.`],
   ["What permission does it ask for?", "Read-only access to Google Drive file metadata (names, types, dates, sizes and links), plus your email address so it can tell your accounts apart. It cannot open or change the contents of your files."],
-  ["Does DriveNest store my files?", "No. File listings are fetched from Google when you browse and are not saved in a database. Sign-in details are kept in a temporary, server-side session that expires after one hour."],
-  ["How do I disconnect an account?", "Use the Disconnect button next to the account inside DriveNest. You can also remove access at myaccount.google.com/permissions."],
-  ["Why am I asked to sign in again?", "For your security, sessions last one hour. After that, sign in with Google to reconnect your accounts."],
+  ["Does DriveNest store my files?", "No. File listings are fetched from Google when you browse and are never saved. DriveNest stores your account (email and name) and, for each Drive you connect, an encrypted access key so it stays connected. You can delete all of it at any time."],
+  ["How do I sign up?", "Choose Sign up and continue with Google or GitHub. That login becomes your DriveNest account. Connecting a Google Drive is a separate step."],
+  ["How do I disconnect an account or delete mine?", "Use Disconnect next to a Drive inside DriveNest, or “Delete my account” in the account menu to erase everything. You can also remove access at myaccount.google.com/permissions."],
+  ["Why am I asked to log in again?", "Logins expire after 7 days without activity. Your connected Drives stay linked to your account, so you only need to log in."],
   ["Does it work with work or school accounts?", "It works with Google accounts, but some organizations restrict which apps can access Drive. If sign-in is blocked, ask your administrator."],
 ];
 
@@ -81,12 +82,13 @@ export default function Landing({ error }) {
                 read-only, so it can never change or delete a thing.
               </p>
               <div className="hero-actions">
-                <SignInButton />
-                <a className="btn btn-ghost" href="#how">See how it works</a>
+                <a className="btn btn-primary" href="/signup">Sign up</a>
+                <a className="btn btn-ghost" href="/login">Log in</a>
               </div>
               <p className="fine">
-                Requests read-only access to file details only. Read our{" "}
-                <a href="/privacy">Privacy Policy</a>.
+                Sign up with Google or GitHub. Connecting a Drive asks for
+                read-only access to file details only.{" "}
+                <a href="#how">See how it works</a> · <a href="/privacy">Privacy Policy</a>
               </p>
             </div>
             <Mockup />
@@ -141,8 +143,9 @@ export default function Landing({ error }) {
               </div>
             </div>
             <p className="fine">
-              Details are in the <a href="/privacy">Privacy Policy</a>. Sessions
-              expire after one hour and file listings are never stored.
+              Details are in the <a href="/privacy">Privacy Policy</a>. File
+              listings are never stored, and you can disconnect a Drive or
+              delete your account at any time.
             </p>
           </div>
         </section>
@@ -164,8 +167,8 @@ export default function Landing({ error }) {
         <section className="cta">
           <div className="wrap cta-inner">
             <h2>Bring your Drives together.</h2>
-            <p>Sign in with Google and add your first account in under a minute.</p>
-            <SignInButton className="btn-light" />
+            <p>Sign up with Google or GitHub and add your first Drive in under a minute.</p>
+            <a className="btn btn-google btn-light" href="/signup">Create your account</a>
           </div>
         </section>
       </main>

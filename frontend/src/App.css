@@ -269,3 +269,11 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .legal-date { margin-bottom: 8px; color: var(--overlay); }
 
 .brand-logo { flex: 0 0 auto; width: 48px; height: 48px; padding: 4px; border-radius: 14px; background: #fff; }
+
+.user-menu { position: relative; }
+.user-menu summary { list-style: none; cursor: pointer; max-width: 220px; padding: 8px 12px; overflow: hidden; border: 1px solid var(--surface1); border-radius: 11px; background: var(--surface0); color: var(--text); font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+.user-menu summary::-webkit-details-marker { display: none; }
+.user-menu-panel { position: absolute; right: 0; top: calc(100% + 8px); z-index: 20; display: grid; gap: 4px; min-width: 190px; padding: 8px; border: 1px solid var(--border); border-radius: 12px; background: var(--base); box-shadow: var(--shadow); }
+.user-menu-panel button { padding: 9px 11px; border: 0; border-radius: 8px; background: transparent; color: var(--text); font-size: 13px; text-align: left; }
+.user-menu-panel button:hover { background: var(--surface0); }
+.user-menu-panel .danger { color: var(--red); }

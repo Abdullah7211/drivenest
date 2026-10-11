@@ -25,6 +25,8 @@ export default function Terms() {
 
         <h2>3. Your accounts</h2>
         <p>
+          You create a {APP_NAME} account by signing up with Google or GitHub.
+          You are responsible for keeping access to that login secure.{" "}
           You may only connect Google accounts that you own or are authorized
           to use. You are responsible for activity under your connected
           accounts and for following Google&apos;s terms and any policies of your
