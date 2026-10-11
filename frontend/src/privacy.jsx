@@ -1,25 +1,14 @@
-import "./App.css";
-import SiteFooter from "./SiteFooter.jsx";
-import { APP_NAME, SUPPORT_EMAIL, PRIVACY_EFFECTIVE_DATE } from "./siteConfig.js";
+import PublicLayout from "./PublicLayout.jsx";
+import { APP_NAME, SUPPORT_EMAIL, LEGAL_DATE } from "./siteConfig.js";
 
 export default function Privacy() {
   return (
-    <main className="app">
-      <header className="topbar">
-        <a className="brand brand-link" href="/">
-          <div className="brand-icon">D</div>
-          <div>
-            <h1>{APP_NAME}</h1>
-            <p>All your Google Drives, one place</p>
-          </div>
-        </a>
-      </header>
+    <PublicLayout title={`Privacy Policy – ${APP_NAME}`}>
+      <article className="wrap doc">
+        <h1>Privacy Policy for {APP_NAME}</h1>
+        <p className="doc-date">Effective date: {LEGAL_DATE}</p>
 
-      <article className="content legal">
-        <h2>Privacy Policy for {APP_NAME}</h2>
-        <p className="legal-date">Effective date: {PRIVACY_EFFECTIVE_DATE}</p>
-
-        <h3>1. Introduction</h3>
+        <h2>1. Introduction</h2>
         <p>
           {APP_NAME} (https://drivenest.app) is a web application that lets you
           connect one or more Google accounts and browse the file listings of
@@ -28,7 +17,7 @@ export default function Privacy() {
           can disconnect your accounts.
         </p>
 
-        <h3>2. Information we access</h3>
+        <h2>2. Information we access</h2>
         <p>When you connect a Google account, {APP_NAME} requests these Google OAuth scopes:</p>
         <ul>
           <li><strong>openid</strong> and <strong>email</strong>: to identify the Google account you connected (your email address and, if Google provides it, your display name).</li>
@@ -46,7 +35,7 @@ export default function Privacy() {
           secure the service.
         </p>
 
-        <h3>3. How we use information</h3>
+        <h2>3. How we use information</h2>
         <p>
           Google user data is used only to provide the features you see in the
           app: listing the files and folders of the Google accounts you
@@ -56,7 +45,7 @@ export default function Privacy() {
           or any purpose unrelated to these features.
         </p>
 
-        <h3>4. Google API Services User Data Policy (Limited Use)</h3>
+        <h2>4. Google API Services User Data Policy (Limited Use)</h2>
         <p>
           {APP_NAME}'s use and transfer to any other app of information
           received from Google APIs adheres to the{" "}
@@ -71,7 +60,7 @@ export default function Privacy() {
           train generalized AI or machine-learning models.
         </p>
 
-        <h3>5. How data is stored and protected</h3>
+        <h2>5. How data is stored and protected</h2>
         <ul>
           <li>Your connected accounts' email addresses, display names, and Google OAuth tokens (including the refresh token) are kept in a server-side session, stored in a Redis database on {APP_NAME}'s backend. They are not exposed to your browser; your browser only holds an opaque, HTTP-only session cookie.</li>
           <li>Sessions expire automatically after one hour of the session cookie's lifetime. After that, the stored tokens and account details are removed and you need to connect your account again.</li>
@@ -79,7 +68,7 @@ export default function Privacy() {
           <li>All traffic between your browser, {APP_NAME}, and Google is encrypted with HTTPS. Session cookies are marked secure and HTTP-only.</li>
         </ul>
 
-        <h3>6. Data sharing</h3>
+        <h2>6. Data sharing</h2>
         <p>
           We do not sell or rent your data and do not share it with advertisers.
           Data is processed only by the infrastructure providers needed to run
@@ -89,7 +78,7 @@ export default function Privacy() {
           security threats or abuse.
         </p>
 
-        <h3>7. Retention, disconnecting, and deletion</h3>
+        <h2>7. Retention, disconnecting, and deletion</h2>
         <ul>
           <li>Use the <strong>Disconnect</strong> button next to an account in {APP_NAME} to immediately remove that account and its tokens from your session.</li>
           <li>Any remaining session data is deleted automatically when the session expires (within one hour).</li>
@@ -99,35 +88,33 @@ export default function Privacy() {
           <li>To ask about or request deletion of any data related to you, email <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>.</li>
         </ul>
 
-        <h3>8. Third-party services</h3>
+        <h2>8. Third-party services</h2>
         <p>
           {APP_NAME} relies on Google for sign-in and Google Drive API access.
           Google processes your data under its own{" "}
           <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>.
         </p>
 
-        <h3>9. Children's privacy</h3>
+        <h2>9. Children's privacy</h2>
         <p>
           {APP_NAME} is not directed to children under 13, and we do not
           knowingly collect personal information from them. If you believe a
           child has used the service, contact us and we will take appropriate action.
         </p>
 
-        <h3>10. Changes to this policy</h3>
+        <h2>10. Changes to this policy</h2>
         <p>
           We may update this policy when the app or legal requirements change.
           The current version is always available at https://drivenest.app/privacy
           with its effective date.
         </p>
 
-        <h3>11. Contact</h3>
+        <h2>11. Contact</h2>
         <p>
           Questions about privacy or data deletion:{" "}
           <a href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</a>
         </p>
       </article>
-
-      <SiteFooter />
-    </main>
+    </PublicLayout>
   );
 }

@@ -5,9 +5,10 @@ export default function SiteFooter() {
     <footer className="site-footer">
       <span>© {new Date().getFullYear()} {APP_NAME}</span>
       <nav aria-label="Legal and support">
-        <a href="/">Home</a>
         <a href="/privacy">Privacy Policy</a>
-        <a href={`mailto:${SUPPORT_EMAIL}`}>Contact support</a>
+        <a href="/terms">Terms</a>
+        <a href="/support">Support</a>
+        <a href={`mailto:${SUPPORT_EMAIL}`}>Contact</a>
       </nav>
     </footer>
   );
