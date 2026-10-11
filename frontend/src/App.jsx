@@ -236,10 +236,6 @@ function App() {
     file.name.toLowerCase().includes(search.toLowerCase())
   );
 
-  if (loading) {
-    return <main className="center">Loading DriveNest…</main>;
-  }
-
   return (
     <main className="app">
       <header className="topbar">
